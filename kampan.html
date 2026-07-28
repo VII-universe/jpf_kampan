@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Přebíráme exekutivní odpovědnost a zavedeme ve vaší firmě řád, zastupitelnost a růst. Nezávazně proberte stav firmy s JPF.">
+  <title>Řídíte ještě svou firmu, nebo firma řídí vás? | JPF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:      #225aea;
+      --blue-dark: #1847c0;
+      --orange:    #ea5b0c;
+      --orange-h:  #d04f0a;
+      --dark:      #070d28;
+      --dark2:     #0b1234;
+      --dark3:     #0f1845;
+      --ink:       #040a1c;
+      --green:     #22c55e;
+      --red:       #ef4444;
+      --tx1:       #e8ecf4;
+      --tx2:       #8892a8;
+      --tx3:       #4a5270;
+      --bd:  rgba(255,255,255,.07);
+      --bd2: rgba(255,255,255,.12);
+      --fh: 'Lexend', sans-serif;
+      --fb: 'Source Sans 3', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body { font-family: var(--fb); color: var(--tx1); background: var(--dark); line-height: 1.65; overflow-x: hidden; }
+    img, svg { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,5vw,80px); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 32px; font-family: var(--fh); font-size: 15px;
+      font-weight: 600; letter-spacing: .03em; text-decoration: none;
+      border: none; border-radius: 7px; cursor: pointer;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+    }
+    .btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+    .btn-primary { background: var(--orange); color: #fff; box-shadow: 0 4px 20px rgba(234,91,12,.35); }
+    .btn-primary:hover { background: var(--orange-h); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(234,91,12,.48); }
+    .btn-ghost { background: transparent; color: var(--tx1); border: 1.5px solid rgba(255,255,255,.22); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.44); background: rgba(255,255,255,.05); transform: translateY(-1px); }
+    .btn-lg { padding: 18px 40px; font-size: 16px; }
+
+    /* ── HEADER ── */
+    .site-hdr {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      transition: background .45s cubic-bezier(.4,0,.2,1), backdrop-filter .45s, box-shadow .45s;
+    }
+    .site-hdr.scrolled {
+      background: rgba(6,9,15,.92); backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px); box-shadow: 0 1px 0 rgba(255,255,255,.06);
+    }
+    .hdr-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(20px,5vw,80px); max-width: 1440px; margin: 0 auto; height: 72px;
+    }
+    .hdr-logo-wrap { display: flex; flex-direction: column; gap: 3px; justify-content: center; }
+    .hdr-logo-link { display: block; text-decoration: none; line-height: 0; }
+    .hdr-tagline {
+      font-family: var(--fh); font-size: 10px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.75);
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height .5s cubic-bezier(.4,0,.2,1), opacity .5s;
+    }
+    .site-hdr.scrolled .hdr-tagline { max-height: 18px; opacity: 1; }
+    .site-hdr .btn-primary { padding: 10px 28px; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100svh; display: flex;
+      flex-direction: column; justify-content: center;
+      overflow: hidden; padding-top: 72px;
+    }
+    .hero-fallback {
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(135deg, #040a1c 0%, #0b1852 55%, #070d28 100%);
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; z-index: 1; filter: blur(90px); pointer-events: none;
+    }
+    .hero-orb-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(34,90,234,.6), transparent 70%);
+      top: -15%; right: -8%; animation: orbDrift1 20s ease-in-out infinite;
+    }
+    .hero-orb-2 {
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(234,91,12,.18), transparent 70%);
+      bottom: 5%; left: 2%; animation: orbDrift2 25s ease-in-out infinite;
+    }
+    @keyframes orbDrift1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(-50px,40px) scale(1.06); }
+      66%  { transform: translate(30px,-25px) scale(.94); }
+    }
+    @keyframes orbDrift2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(40px,-50px) scale(1.1); }
+    }
+    .hero-video {
+      position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%;
+      object-fit: cover; filter: brightness(.38) saturate(.7);
+    }
+    .hero-ov {
+      position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(7,13,40,.88) 0%, rgba(7,13,40,.15) 40%, rgba(7,13,40,.15) 65%, var(--dark2) 100%),
+        linear-gradient(rgba(34,90,234,.28), rgba(34,90,234,.28));
+    }
+    .hero-dots-bg {
+      position: absolute; inset: 0; z-index: 4; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, black, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, black, transparent 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 5;
+      padding: clamp(60px,8vw,100px) clamp(20px,5vw,80px);
+      max-width: 1200px; width: 100%; margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--fh); font-size: 11px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 2px;
+      background: var(--orange); border-radius: 1px;
+    }
+    .hero-h1 {
+      font-family: var(--fh); font-size: clamp(36px,5.5vw,74px); font-weight: 900;
+      line-height: 1.05; color: #fff; letter-spacing: -.03em;
+      margin-bottom: 28px; max-width: 800px;
+    }
+    .hero-h1 em { font-style: normal; color: var(--orange); }
+    .hero-sub {
+      font-family: var(--fb); font-size: clamp(16px,1.8vw,20px); font-weight: 400;
+      color: rgba(255,255,255,.55); max-width: 560px; line-height: 1.65;
+      margin-bottom: 48px;
+    }
+    .hero-ctas {
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.3); font-family: var(--fh); font-size: 10px;
+      letter-spacing: .15em; text-transform: uppercase; animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── LOAD ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(36px); filter: blur(4px); }
+      to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .hero-eyebrow { animation: fadeDown .7s cubic-bezier(.16,1,.3,1) .1s both; }
+    .hero-h1      { animation: fadeUp  .9s cubic-bezier(.16,1,.3,1) .25s both; }
+    .hero-sub     { animation: fadeUp  .9s cubic-bezier(.16,1,.3,1) .42s both; }
+    .hero-ctas    { animation: fadeUp  .9s cubic-bezier(.16,1,.3,1) .58s both; }
+
+    /* ── SCROLL REVEAL ── */
+    .rv { opacity: 0; transform: translateY(32px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+    .rv.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+    .d4 { transition-delay: .4s; }
+
+    /* ── SECTION COMMON ── */
+    .sec-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--fh); font-size: 11px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 20px;
+    }
+    .sec-eyebrow::before {
+      content: ''; width: 22px; height: 2px; background: var(--orange); border-radius: 1px;
+    }
+    .sec-h { font-family: var(--fh); font-size: clamp(26px,3.8vw,48px); font-weight: 800; color: #fff; letter-spacing: -.025em; line-height: 1.1; }
+    .sec-h em { font-style: normal; color: var(--orange); }
+    .sec-lead { font-family: var(--fb); font-size: clamp(15px,1.7vw,18px); color: var(--tx2); line-height: 1.7; max-width: 600px; margin-top: 16px; }
+
+    /* ── EMOTIONAL MIRROR ── */
+    .sec-mirror {
+      background: var(--dark2); padding: clamp(80px,10vw,140px) 0;
+      position: relative;
+    }
+    .sec-mirror::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to bottom, var(--dark2), transparent); pointer-events: none;
+    }
+    .sec-mirror::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to top, var(--dark3), transparent); pointer-events: none;
+    }
+    .mirror-hdr { margin-bottom: clamp(48px,6vw,80px); }
+    .mirror-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: clamp(16px,2vw,24px);
+    }
+    .mirror-item {
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px; padding: clamp(28px,3.5vw,44px) clamp(24px,3vw,36px);
+      position: relative; overflow: hidden;
+      transition: border-color .3s, background .3s;
+    }
+    .mirror-item:hover { border-color: rgba(234,91,12,.3); background: rgba(234,91,12,.03); }
+    .mirror-item::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--orange), transparent);
+      border-radius: 20px 20px 0 0;
+    }
+    .mirror-num {
+      font-family: var(--fh); font-size: 11px; font-weight: 700;
+      letter-spacing: .2em; color: var(--orange); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mirror-num::after { content: ''; flex: 0 0 28px; height: 1px; background: rgba(234,91,12,.3); }
+    .mirror-title {
+      font-family: var(--fh); font-size: clamp(17px,2vw,22px); font-weight: 700;
+      color: #fff; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 14px;
+    }
+    .mirror-desc { font-family: var(--fb); font-size: clamp(14px,1.4vw,16px); color: var(--tx2); line-height: 1.65; }
+
+    /* ── URGENCY / COMPARISON ── */
+    .sec-urgency {
+      background: var(--dark3); padding: clamp(80px,10vw,140px) 0; position: relative;
+    }
+    .sec-urgency::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to top, var(--dark2), transparent); pointer-events: none;
+    }
+    .urgency-hdr { margin-bottom: clamp(48px,6vw,80px); }
+    .urgency-quote {
+      font-family: var(--fh); font-size: clamp(15px,1.8vw,20px); font-style: italic;
+      color: rgba(255,255,255,.5); border-left: 3px solid var(--orange);
+      padding-left: 24px; margin-top: 24px; line-height: 1.6;
+    }
+    .compare-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; border-radius: 20px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .compare-col-hdr {
+      padding: 20px 28px; display: flex; align-items: center; gap: 12px;
+      font-family: var(--fh); font-size: 13px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .compare-col-hdr--good {
+      background: rgba(34,197,94,.1); color: var(--green);
+      border-bottom: 1px solid rgba(34,197,94,.15);
+    }
+    .compare-col-hdr--bad {
+      background: rgba(239,68,68,.08); color: var(--red);
+      border-bottom: 1px solid rgba(239,68,68,.12);
+    }
+    .compare-col-hdr svg { flex-shrink: 0; }
+    .compare-row {
+      display: contents;
+    }
+    .compare-cell {
+      padding: 20px 28px; display: flex; align-items: flex-start; gap: 14px;
+      font-family: var(--fb); font-size: clamp(14px,1.4vw,16px); line-height: 1.55;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .compare-cell:last-child, .compare-cell:nth-last-child(2) { border-bottom: none; }
+    .compare-cell--good {
+      background: rgba(34,197,94,.04); color: var(--tx1);
+    }
+    .compare-cell--bad {
+      background: rgba(239,68,68,.04); color: rgba(255,255,255,.6);
+    }
+    .compare-icon { flex-shrink: 0; margin-top: 2px; }
+    .compare-icon--good { color: var(--green); }
+    .compare-icon--bad  { color: var(--red); }
+
+    /* ── TEST BRIDGE ── */
+    .sec-bridge {
+      background: var(--dark2); padding: clamp(80px,10vw,140px) 0; position: relative;
+    }
+    .bridge-box {
+      border: 1px solid rgba(234,91,12,.3);
+      border-radius: 24px; padding: clamp(40px,6vw,72px) clamp(32px,5vw,72px);
+      background: rgba(234,91,12,.04);
+      display: grid; grid-template-columns: 1fr auto;
+      gap: clamp(32px,4vw,60px); align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .bridge-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--orange), rgba(234,91,12,.3) 60%, transparent);
+    }
+    .bridge-box::after {
+      content: ''; position: absolute; bottom: -80px; right: -80px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(234,91,12,.1), transparent 65%);
+      pointer-events: none;
+    }
+    .bridge-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--fh); font-size: 11px; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 16px;
+    }
+    .bridge-h {
+      font-family: var(--fh); font-size: clamp(22px,3vw,36px); font-weight: 800;
+      color: #fff; letter-spacing: -.025em; line-height: 1.15; margin-bottom: 16px;
+    }
+    .bridge-desc { font-family: var(--fb); font-size: clamp(14px,1.5vw,17px); color: var(--tx2); line-height: 1.65; }
+    .bridge-cta { flex-shrink: 0; position: relative; z-index: 1; }
+
+    /* ── WHY JPF ── */
+    .sec-why {
+      background: var(--dark); padding: clamp(80px,10vw,140px) 0; position: relative;
+    }
+    .sec-why::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to bottom, var(--dark2), transparent); pointer-events: none;
+    }
+    .why-hdr { margin-bottom: clamp(48px,6vw,80px); }
+    .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(16px,2vw,24px); }
+    .why-item {
+      padding: clamp(28px,3.5vw,44px) clamp(24px,3vw,36px);
+      background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px; position: relative; overflow: hidden;
+      transition: border-color .3s, background .3s;
+    }
+    .why-item:hover { border-color: rgba(34,90,234,.35); background: rgba(34,90,234,.04); }
+    .why-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(234,91,12,.12); border: 1px solid rgba(234,91,12,.2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px; color: var(--orange);
+    }
+    .why-title {
+      font-family: var(--fh); font-size: clamp(16px,1.8vw,20px); font-weight: 700;
+      color: #fff; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 12px;
+    }
+    .why-desc { font-family: var(--fb); font-size: clamp(14px,1.4vw,16px); color: var(--tx2); line-height: 1.65; }
+
+    /* ── FORM ── */
+    .sec-form {
+      background: var(--ink); padding: clamp(80px,10vw,140px) 0; position: relative;
+    }
+    .sec-form::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to bottom, var(--dark), transparent); pointer-events: none;
+    }
+    .form-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(40px,6vw,100px); align-items: start;
+    }
+    .form-intro { }
+    .form-intro .sec-h { margin-bottom: 20px; }
+    .form-intro-lead { font-family: var(--fb); font-size: clamp(15px,1.6vw,17px); color: var(--tx2); line-height: 1.7; }
+    .form-trust {
+      display: flex; flex-direction: column; gap: 16px; margin-top: 40px;
+    }
+    .form-trust-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-family: var(--fb); font-size: 14px; color: var(--tx2); line-height: 1.5;
+    }
+    .form-trust-icon {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.2);
+      display: flex; align-items: center; justify-content: center; color: var(--green);
+    }
+
+    .jpf-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 7px; }
+    .form-label { font-family: var(--fh); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--tx2); }
+    .form-input, .form-select {
+      width: 100%; padding: 15px 18px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; color: var(--tx1); font-family: var(--fb); font-size: 15px;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+      outline: none; appearance: none; -webkit-appearance: none;
+    }
+    .form-input::placeholder { color: rgba(255,255,255,.25); }
+    .form-input:focus, .form-select:focus {
+      border-color: rgba(234,91,12,.55); background: rgba(234,91,12,.04);
+      box-shadow: 0 0 0 3px rgba(234,91,12,.12);
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238892a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
+      padding-right: 44px; cursor: pointer;
+    }
+    .form-select option { background: #0b1234; color: var(--tx1); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit { margin-top: 8px; }
+    .form-submit .btn { width: 100%; justify-content: center; padding: 18px; font-size: 16px; }
+    .form-guarantee {
+      display: flex; align-items: flex-start; gap: 10px; margin-top: 14px;
+      font-family: var(--fb); font-size: 13px; color: var(--tx3); line-height: 1.5;
+    }
+    .form-guarantee svg { flex-shrink: 0; margin-top: 1px; color: var(--green); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--ink); border-top: 1px solid rgba(255,255,255,.05);
+      padding: clamp(32px,5vw,60px) 0;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo path, .footer-logo polygon { fill: rgba(255,255,255,.3); }
+    .footer-logo svg { height: 20px; width: auto; }
+    .footer-txt { font-size: 13px; color: var(--tx3); }
+    .footer-txt a { color: var(--tx3); text-decoration: none; transition: color .2s; }
+    .footer-txt a:hover { color: var(--tx2); }
+
+    /* ── SVG DEFS ── */
+    .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1000px) {
+      .why-grid { grid-template-columns: repeat(2,1fr); }
+      .bridge-box { grid-template-columns: 1fr; }
+      .bridge-cta { width: 100%; }
+      .bridge-cta .btn { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 760px) {
+      .mirror-grid { grid-template-columns: 1fr; }
+      .compare-wrap { grid-template-columns: 1fr; border-radius: 16px; }
+      .compare-col-hdr--bad { border-top: 1px solid rgba(255,255,255,.08); }
+      .compare-row { display: contents; }
+      .compare-cell--bad { border-top: none; }
+      .form-wrap { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 500px) {
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" style="position:absolute;left:-9999px;z-index:9999;padding:8px 16px;top:0;border-radius:0 0 4px 0;" class="btn btn-primary">Přeskočit na obsah</a>
+
+  <!-- ================================================================
+       HEADER
+  ================================================================ -->
+  <header class="site-hdr" role="banner">
+    <div class="hdr-inner">
+      <div class="hdr-logo-wrap">
+        <a href="index.html" class="hdr-logo-link" aria-label="JPF – domovská stránka">
+          <img src="logo-jpf-white.svg" alt="JPF" style="height:32px;width:auto;display:block;">
+        </a>
+        <span class="hdr-tagline">Interim management</span>
+      </div>
+      <a href="#kontakt" class="btn btn-primary">Nezávazně probrat stav firmy</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================================================================
+         HERO
+    ================================================================ -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-fallback" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+      <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
+        <source src="vids/2.mp4" type="video/mp4">
+      </video>
+      <div class="hero-ov" aria-hidden="true"></div>
+      <div class="hero-dots-bg" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">JPF – Exekutivní partnerství</p>
+        <h1 class="hero-h1">
+          Řídíte ještě svou firmu,<br>
+          nebo <em>firma řídí vás</em>?
+        </h1>
+        <p class="hero-sub">
+          Víme, jaké to je být na všechno sám a denně hasit operativní požáry.
+          V&nbsp;JPF nepředáváme jen knížecí rady na papíře&nbsp;– přebíráme exekutivní odpovědnost
+          a zavedeme ve vaší firmě řád, zastupitelnost a růst.
+        </p>
+        <div class="hero-ctas">
+          <a href="#kontakt" class="btn btn-primary btn-lg">Nezávazně probrat stav firmy</a>
+          <a href="index.html#sec-quiz" class="btn btn-ghost btn-lg">
+            Otestovat, zda je správný čas na změnu
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         EMOTIONAL MIRROR
+    ================================================================ -->
+    <section class="sec-mirror" aria-labelledby="mirror-h">
+      <div class="container">
+        <div class="mirror-hdr rv">
+          <p class="sec-eyebrow">Vaše každodenní realita</p>
+          <h2 class="sec-h" id="mirror-h">Poznáte v&nbsp;tom svou<br>každodenní realitu?</h2>
+          <p class="sec-lead">Pokud vám alespoň jeden z&nbsp;bodů níže zní povědomě, je čas začít situaci řešit.</p>
+        </div>
+
+        <div class="mirror-grid">
+          <div class="mirror-item rv d1">
+            <p class="mirror-num">01</p>
+            <h3 class="mirror-title">Operativní past</h3>
+            <p class="mirror-desc">Místo strategie řešíte mikro-detaily a&nbsp;každodenní chybovost zaměstnanců. Každý problém ve firmě nakonec přistane na vašem stole.</p>
+          </div>
+          <div class="mirror-item rv d2">
+            <p class="mirror-num">02</p>
+            <h3 class="mirror-title">Nulová zastupitelnost</h3>
+            <p class="mirror-desc">Odjet na týdenní dovolenou bez telefonu v&nbsp;ruce je pro vás nerealizovatelný sen. Firma se bez vás jednoduše zastaví.</p>
+          </div>
+          <div class="mirror-item rv d3">
+            <p class="mirror-num">03</p>
+            <h3 class="mirror-title">Strop v&nbsp;růstu</h3>
+            <p class="mirror-desc">Firma dosáhla limitu vašich osobních kapacit. Bez systémového řízení se dál nepohne – a&nbsp;vy to cítíte každý den.</p>
+          </div>
+          <div class="mirror-item rv d4">
+            <p class="mirror-num">04</p>
+            <h3 class="mirror-title">Zodpovědnost leží jen na vás</h3>
+            <p class="mirror-desc">Lidé pod vámi čekají na pokyny, místo aby přinášeli řešení a&nbsp;nesli výsledky. Tíha každého rozhodnutí dopadá jen na vaše ramena.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         URGENCY / COMPARISON
+    ================================================================ -->
+    <section class="sec-urgency" aria-labelledby="urgency-h">
+      <div class="container">
+        <div class="urgency-hdr rv">
+          <p class="sec-eyebrow">Cena nečinnosti</p>
+          <h2 class="sec-h" id="urgency-h">Nejdražší rozhodnutí v&nbsp;podnikání<br>je to, které <em>neuděláte</em>.</h2>
+          <p class="urgency-quote">„Problémy v&nbsp;řízení firmy se nevyřeší samy od sebe&nbsp;– s&nbsp;časem pouze bobtnají a&nbsp;drahnou."</p>
+        </div>
+
+        <div class="compare-wrap rv">
+          <div class="compare-col-hdr compare-col-hdr--good">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Pokud problém řešíte hned
+          </div>
+          <div class="compare-col-hdr compare-col-hdr--bad">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Pokud rozhodnutí odkládáte (6–12 měsíců)
+          </div>
+
+          <div class="compare-row">
+            <div class="compare-cell compare-cell--good">
+              <svg class="compare-icon compare-icon--good" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Udržíte klíčové lidi a&nbsp;motivaci celého týmu
+            </div>
+            <div class="compare-cell compare-cell--bad">
+              <svg class="compare-icon compare-icon--bad" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Klíčoví zaměstnanci vyhoří nebo odejdou ke&nbsp;konkurenci
+            </div>
+          </div>
+
+          <div class="compare-row">
+            <div class="compare-cell compare-cell--good">
+              <svg class="compare-icon compare-icon--good" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Stabilizujete cash-flow a&nbsp;ziskovost firmy
+            </div>
+            <div class="compare-cell compare-cell--bad">
+              <svg class="compare-icon compare-icon--bad" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Operativní chaos skrytě požírá 10–30&nbsp;% vaší marže
+            </div>
+          </div>
+
+          <div class="compare-row">
+            <div class="compare-cell compare-cell--good">
+              <svg class="compare-icon compare-icon--good" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Získáte zpět osobní svobodu, klid a&nbsp;čas na rodinu
+            </div>
+            <div class="compare-cell compare-cell--bad">
+              <svg class="compare-icon compare-icon--bad" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Zvýšený stres a&nbsp;vyhoření zasáhnou vaše zdraví i&nbsp;rodinu
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         TEST BRIDGE
+    ================================================================ -->
+    <section class="sec-bridge" aria-label="Interaktivní test">
+      <div class="container">
+        <div class="bridge-box rv">
+          <div>
+            <p class="bridge-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="15" x2="12" y2="15"/></svg>
+              Nástroj pro majitele firem
+            </p>
+            <h2 class="bridge-h">Chcete se ujistit, zda je pro vaši<br>firmu ten správný čas na změnu?</h2>
+            <p class="bridge-desc">Zjistěte během 2&nbsp;minut, v&nbsp;jaké fázi se nachází řízení vaší firmy a&nbsp;kde vám utíkají peníze i&nbsp;čas. Test je anonymní a&nbsp;výsledek dostanete okamžitě.</p>
+          </div>
+          <div class="bridge-cta">
+            <a href="index.html#sec-quiz" class="btn btn-primary btn-lg">
+              Spustit rychlý test firmy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         WHY JPF
+    ================================================================ -->
+    <section class="sec-why" aria-labelledby="why-h">
+      <div class="container">
+        <div class="why-hdr rv">
+          <p class="sec-eyebrow">Proč JPF</p>
+          <h2 class="sec-h" id="why-h">Nejsme poradci.<br>Jsme <em>exekutivní partner</em> s&nbsp;garancí.</h2>
+          <p class="sec-lead">Konzultanti vám řeknou, co dělat. My to přijedeme odřídit.</p>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-item rv d1">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="why-title">Přebíráme odpovědnost</h3>
+            <p class="why-desc">Neříkáme vám jen, co máte udělat. Náš seniorní manažer vstoupí do firmy a&nbsp;změny fyzicky odřídí&nbsp;– za výsledky ručíme.</p>
+          </div>
+          <div class="why-item rv d2">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+            </div>
+            <h3 class="why-title">Institucionální záštita JPF</h3>
+            <p class="why-desc">Nestojíte na jednom freelancerovi. Za každým naším interim manažerem stojí know-how a&nbsp;záštita celého týmu JPF.</p>
+          </div>
+          <div class="why-item rv d3">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3 class="why-title">Zaměřeno výhradně na MSP</h3>
+            <p class="why-desc">Rozumíme specifickým výzvám malých a&nbsp;středně velkých českých a&nbsp;slovenských firem. Naše zkušenosti jsou přímo z&nbsp;tohoto prostředí.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         CONTACT FORM
+    ================================================================ -->
+    <section class="sec-form" id="kontakt" aria-labelledby="form-h">
+      <div class="container">
+        <div class="form-wrap">
+          <div class="form-intro rv">
+            <p class="sec-eyebrow">Kontakt</p>
+            <h2 class="sec-h" id="form-h">Udělejte první krok k&nbsp;firmě,<br>která funguje i&nbsp;<em>bez vás</em></h2>
+            <p class="form-intro-lead" style="margin-top:20px;">
+              Zanechte nám kontakt. Neformálně a&nbsp;diskrétně probereme stav vaší firmy
+              a&nbsp;možnosti řešení. Bez jakýchkoliv závazků.
+            </p>
+            <div class="form-trust">
+              <div class="form-trust-item">
+                <div class="form-trust-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span><strong style="color:var(--tx1);">Bezplatná konzultace</strong><br>30 minut bez závazků, bez prodejního tlaku.</span>
+              </div>
+              <div class="form-trust-item">
+                <div class="form-trust-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span><strong style="color:var(--tx1);">Odpovídáme do 24 hodin</strong><br>Váš čas je pro nás cenný.</span>
+              </div>
+              <div class="form-trust-item">
+                <div class="form-trust-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span><strong style="color:var(--tx1);">100% diskrétnost</strong><br>Vše probíhá pod smlouvou o&nbsp;mlčenlivosti (NDA).</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rv d1">
+            <form class="jpf-form" method="POST" action="#kontakt" novalidate>
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label" for="f-name">Jméno a příjmení</label>
+                  <input class="form-input" id="f-name" name="name" type="text" placeholder="Jan Novák" required autocomplete="name">
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="f-phone">Telefonní číslo</label>
+                  <input class="form-input" id="f-phone" name="phone" type="tel" placeholder="+420 777 000 000" required autocomplete="tel">
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-email">Firemní e-mail</label>
+                <input class="form-input" id="f-email" name="email" type="email" placeholder="jan.novak@firma.cz" required autocomplete="email">
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-revenue">Roční obrat firmy</label>
+                <select class="form-select" id="f-revenue" name="revenue" required>
+                  <option value="" disabled selected>Vyberte obrat firmy</option>
+                  <option value="do-30m">Do 30 mil. Kč</option>
+                  <option value="30-100m">30–100 mil. Kč</option>
+                  <option value="100m+">100 mil. Kč a více</option>
+                </select>
+              </div>
+              <div class="form-submit">
+                <button type="submit" class="btn btn-primary">
+                  Chci nezávaznou konzultaci zdarma
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+              <div class="form-guarantee">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                100% garance diskrétnosti a&nbsp;mlčenlivosti (NDA). Ozveme se vám do&nbsp;24&nbsp;hodin.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================
+       FOOTER
+  ================================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-logo" aria-label="JPF">
+          <svg viewBox="0 0 400 165" aria-hidden="true" focusable="false">
+            <path d="M199.45,94.6l10.58-11.78c4.36,4.8,8.62,7.63,13.96,7.63,6.33,0,10.25-3.82,10.25-12.65V28.62h17.23v49.95c0,9.05-2.62,15.81-7.2,20.39-4.69,4.69-11.56,7.09-19.85,7.09-11.89,0-19.74-5.23-24.97-11.45"/>
+            <path d="M268.59,28.62h31.19c18.21,0,29.23,10.8,29.23,26.39v.22c0,17.67-13.74,26.83-30.86,26.83h-12.76v22.9h-16.8V28.62ZM298.69,67.12c8.4,0,13.3-5.02,13.3-11.56v-.22c0-7.52-5.23-11.56-13.63-11.56h-12.98v23.34h13.3Z"/>
+            <polygon points="341.43 28.62 399.56 28.62 399.56 43.89 358.23 43.89 358.23 60.14 394.65 60.14 394.65 75.41 358.23 75.41 358.23 104.96 341.43 104.96 341.43 28.62"/>
+          </svg>
+        </a>
+        <p class="footer-txt">
+          © 2026 JPF. Všechna práva vyhrazena.&nbsp;·&nbsp;
+          <a href="index.html">Hlavní stránka</a>&nbsp;·&nbsp;
+          <a href="mailto:info@otrokvlastnifirmy.cz">info@otrokvlastnifirmy.cz</a>&nbsp;·&nbsp;
+          <a href="tel:+420724155643">724 155 643</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── HEADER SCROLL ── */
+    (function () {
+      const hdr = document.querySelector('.site-hdr');
+      function check() { hdr.classList.toggle('scrolled', window.scrollY > 20); }
+      window.addEventListener('scroll', check, { passive: true });
+      check();
+    })();
+
+    /* ── SCROLL REVEAL ── */
+    (function () {
+      const els = document.querySelectorAll('.rv');
+      if (!els.length) return;
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+      }, { threshold: .12 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
+
+</body>
+</html>
